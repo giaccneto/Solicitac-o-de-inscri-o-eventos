@@ -824,10 +824,10 @@
         // Função para carregar todos os eventos da API (se necessário)
         async function carregarEventosDaAPI() {
             try {
-                // NOTA: O endpoint para listar todos os eventos não foi fornecido
-                // Se sua API tiver um endpoint GET sem parâmetros, você pode usá-lo aqui
-                // const response = await fetch(API_BASE_URL);
-                // eventos = await response.json();
+                
+                 Se sua API tiver um endpoint GET sem parâmetros, você pode usá-lo aqui
+                 const response = await fetch(API_BASE_URL);
+                 eventos = await response.json();
                 
                 // Por enquanto, a lista inicia vazia
                 eventos = [];
@@ -840,4 +840,5 @@
         }
     </script>
 </body>
+
 </html>
