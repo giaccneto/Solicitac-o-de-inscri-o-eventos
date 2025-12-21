@@ -5,6 +5,7 @@ Um sistema completo para gestão de eventos profissionais, desenvolvido com Spri
 
 ✨ Funcionalidades
 Backend (Spring Boot)
+
 ✅ CRUD completo de eventos
 
 ✅ Busca de eventos por nome
@@ -18,6 +19,7 @@ Backend (Spring Boot)
 ✅ Validação de dados
 
 Frontend (HTML/CSS/JS + Bootstrap)
+
 ✅ Interface responsiva e moderna
 
 ✅ Formulário para criação de eventos
@@ -32,26 +34,7 @@ Frontend (HTML/CSS/JS + Bootstrap)
 
 ✅ Feedback visual com mensagens toast
 
-🗂️ Estrutura do Projeto
-text
-eventospro/
-├── backend/                 # Aplicação Spring Boot
-│   ├── src/main/java/com/giaccneto/Solicitacao/de/inscricao/eventos/
-│   │   ├── controller/     # Controladores REST
-│   │   ├── entities/       # Entidades JPA
-│   │   ├── repository/     # Repositórios Spring Data
-│   │   ├── service/        # Lógica de negócio
-│   │   └── config/         # Configurações
-│   └── pom.xml            # Dependências Maven
-│
-├── frontend/               # Interface web
-│   ├── index.html         # Página principal
-│   ├── css/               # Estilos personalizados
-│   ├── js/                # JavaScript modularizado
-│   └── assets/            # Imagens e ícones
-│
-├── database/              # Scripts SQL (se necessário)
-└── README.md             # Este arquivo
+
 🚀 Começando
 Pré-requisitos
 Java 17+ (para o backend)
@@ -120,8 +103,11 @@ json
   "dataFim": "2024-06-10",
   "diaria": true
 }
+
 🎨 Interface do Usuário
+
 Layout Principal
+
 Sidebar: Formulário para criação de eventos
 
 Conteúdo Principal: Lista de eventos cadastrados
@@ -131,6 +117,7 @@ Header: Barra de navegação com busca
 Footer: Informações do sistema
 
 Componentes
+
 Formulário de Evento
 
 Campos obrigatórios marcados com *
