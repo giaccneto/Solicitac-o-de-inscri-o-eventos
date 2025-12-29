@@ -24,16 +24,16 @@ public class EventoController {
     public ResponseEntity<Evento> buscarPorNome(@PathVariable String nomeEvento){
         return ResponseEntity.ok(eventoService.buscarPorNomeEvento(nomeEvento));
     }
-    @DeleteMapping("/{nomeEvento}")
-    public ResponseEntity<Void> deletarPorNome(@PathVariable String nomeEvento){
-        eventoService.deletarEvento(nomeEvento);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarPorId(@PathVariable Long id){
+        eventoService.deletarEvento(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{nomeEvento}")
+    @PutMapping("/{id}")
     public ResponseEntity<Evento> atualizarEvento(
-            @PathVariable String nomeEvento, @RequestBody Evento eventoAtualizado){
-        Evento evento = eventoService.atualizarPorNome(nomeEvento, eventoAtualizado);
+            @PathVariable Long id, @RequestBody Evento eventoAtualizado){
+        Evento evento = eventoService.atualizarPorId(id, eventoAtualizado);
         return ResponseEntity.ok(evento);
     }
 }
