@@ -1,8 +1,6 @@
 package com.giaccneto.Solicitacao.de.inscricao.eventos.controller;
 
-import com.giaccneto.Solicitacao.de.inscricao.eventos.entities.Evento;
 import com.giaccneto.Solicitacao.de.inscricao.eventos.entities.Usuario;
-import com.giaccneto.Solicitacao.de.inscricao.eventos.service.EventoService;
 import com.giaccneto.Solicitacao.de.inscricao.eventos.service.UsuarioService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
