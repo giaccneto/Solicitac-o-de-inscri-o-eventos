@@ -10,6 +10,8 @@ import java.util.Optional;
 public interface EventoRepository extends JpaRepository<Evento, Long> {
 
     boolean existsByNomeEvento(String nomeEvento);
+
     Optional<Evento> findByNomeEvento(String nomeEvento);
+
     void deleteByNomeEvento(String nomeEvento);
 }
