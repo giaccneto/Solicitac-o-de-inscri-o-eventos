@@ -2,21 +2,37 @@ package com.giaccneto.Solicitacao.de.inscricao.eventos.service;
 
 import com.giaccneto.Solicitacao.de.inscricao.eventos.entities.Usuario;
 import com.giaccneto.Solicitacao.de.inscricao.eventos.repository.UsuarioRepository;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@NoArgsConstructor(force = true)
+@AllArgsConstructor
 @Service
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UsuarioService(UsuarioRepository usuarioRepository) {
-        this.usuarioRepository = usuarioRepository;
-    }
 
     public Usuario criarUsuario(Usuario usuario) {
-        return usuarioRepository.save(usuario);
+        try{
+            emailExiste(usuario.getEmail());
+            usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
+            return usuarioRepository.save(usuario);
+        }catch(RuntimeException e){
+            throw new RuntimeException("Email ja cadastrado", e.getCause());
+        }
+    }
+
+    private void emailExiste(String email) {
+        try{
+            boolean existe = usuarioRepository.existsByEmail(email);
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Email ja cadastrado", e.getCause());
+        }
     }
 
     public List<Usuario> listarUsuarios() {

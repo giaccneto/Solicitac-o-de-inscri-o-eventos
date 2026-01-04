@@ -1,23 +1,38 @@
 package com.giaccneto.Solicitacao.de.inscricao.eventos.controller;
 
 import com.giaccneto.Solicitacao.de.inscricao.eventos.entities.Usuario;
+import com.giaccneto.Solicitacao.de.inscricao.eventos.security.JwtUtil;
 import com.giaccneto.Solicitacao.de.inscricao.eventos.service.UsuarioService;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/usuarios")
+@NoArgsConstructor(force = true)
+@AllArgsConstructor
+@RequestMapping("/usuario")
 public class UsuarioController {
 
+    private final AuthenticationManager authenticationManager;
     private final UsuarioService usuarioService;
+    private final JwtUtil jwtUtil;
 
-    public UsuarioController(UsuarioService usuarioService) {
-        this.usuarioService = usuarioService;
+
+
+    @PostMapping("/login")
+    public String login(@RequestBody Usuario usuario) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(usuario.getEmail(), usuario.getSenha())
+        );
+        return jwtUtil.generateToken(authentication.getName());
     }
-
     @PostMapping
     public ResponseEntity<Usuario> criarUsuario(@RequestBody Usuario usuario){
         return ResponseEntity.ok(usuarioService.criarUsuario(usuario));
