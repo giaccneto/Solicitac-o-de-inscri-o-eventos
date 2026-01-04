@@ -31,7 +31,7 @@ public class UsuarioController {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(usuario.getEmail(), usuario.getSenha())
         );
-        return jwtUtil.generateToken(authentication.getName());
+        return "Bearer " + jwtUtil.generateToken(authentication.getName());
     }
     @PostMapping
     public ResponseEntity<Usuario> criarUsuario(@RequestBody Usuario usuario){
