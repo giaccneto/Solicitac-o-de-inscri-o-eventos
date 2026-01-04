@@ -34,24 +34,37 @@ public class SecurityConfig {
     // Configuração do filtro de segurança
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        // Cria uma instância do JwtRequestFilter com JwtUtil e UserDetailsService
-        JwtRequestFilter jwtRequestFilter = new JwtRequestFilter(jwtUtil, userDetailsService);
+
+        JwtRequestFilter jwtRequestFilter =
+                new JwtRequestFilter(jwtUtil, userDetailsService);
 
         http
-                .csrf(AbstractHttpConfigurer::disable) // Desativa proteção CSRF para APIs REST (não aplicável a APIs que não mantêm estado)
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/usuario/login").permitAll() // Permite acesso ao endpoint de login sem autenticação
-                        .requestMatchers(HttpMethod.GET, "/auth").permitAll()// Permite acesso ao endpoint GET /auth sem autenticação
-                        .requestMatchers(HttpMethod.POST, "/usuario").permitAll() // Permite acesso ao endpoint POST /usuario sem autenticação
-                        .requestMatchers("/usuario/**").authenticated() // Requer autenticação para qualquer endpoint que comece com /usuario/
-                        .anyRequest().authenticated() // Requer autenticação para todas as outras requisições
-                )
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Configura a política de sessão como stateless (sem sessão)
-                )
-                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class); // Adiciona o filtro JWT antes do filtro de autenticação padrão
+                .csrf(csrf -> csrf.disable())
 
-        // Retorna a configuração do filtro de segurança construída
+                // 🔴 ESSENCIAL PARA O H2
+                .headers(headers ->
+                        headers.frameOptions(frame -> frame.disable())
+                )
+
+                .authorizeHttpRequests(authorize -> authorize
+                        // 🔓 libera H2
+                        .requestMatchers("/h2-console/**").permitAll()
+
+                        // 🔓 login e criação de usuário
+                        .requestMatchers("/usuario/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/usuario").permitAll()
+
+                        // 🔒 resto protegido
+                        .requestMatchers("/usuario/**").authenticated()
+                        .anyRequest().authenticated()
+                )
+
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+
+                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
 

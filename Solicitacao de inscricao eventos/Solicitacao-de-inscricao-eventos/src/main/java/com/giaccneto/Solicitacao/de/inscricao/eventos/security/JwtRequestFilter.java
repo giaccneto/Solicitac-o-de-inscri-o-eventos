@@ -1,6 +1,5 @@
 package com.giaccneto.Solicitacao.de.inscricao.eventos.security;
 
-import com.giaccneto.Solicitacao.de.inscricao.eventos.security.JwtUtil;
 import io.jsonwebtoken.io.IOException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
