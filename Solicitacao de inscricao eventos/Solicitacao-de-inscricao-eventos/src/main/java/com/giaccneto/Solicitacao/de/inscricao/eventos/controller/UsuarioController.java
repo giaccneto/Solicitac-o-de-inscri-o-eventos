@@ -15,7 +15,6 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@NoArgsConstructor(force = true)
 @AllArgsConstructor
 @RequestMapping("/usuario")
 public class UsuarioController {

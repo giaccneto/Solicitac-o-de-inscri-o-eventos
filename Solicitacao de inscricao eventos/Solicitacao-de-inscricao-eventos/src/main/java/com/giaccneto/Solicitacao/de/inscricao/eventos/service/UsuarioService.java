@@ -8,7 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-@NoArgsConstructor(force = true)
+
 @AllArgsConstructor
 @Service
 public class UsuarioService {
