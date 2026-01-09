@@ -169,7 +169,9 @@ Abra um Pull Request
 
 Melhorias:
 
-🚧 Em breve / Roadmap
+🚧 Em breve
+
+
 [ ] Autenticação JWT: Implementação de login seguro.
 
 [ ] Gestão de Usuários: Fluxo de cadastro e persistência em banco de dados.
