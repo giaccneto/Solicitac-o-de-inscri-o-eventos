@@ -77,7 +77,7 @@ Localize a constante API_BASE_URL
 Altere para a URL do seu backend:
 
 javascript
-const API_BASE_URL = 'http://localhost:8080/eventos';
+const API_BASE_URL = 'http://localhost:8080/evento';
 Execute o frontend
 
 Abra index.html diretamente no navegador
@@ -104,76 +104,12 @@ json
   "diaria": true
 }
 
-🎨 Interface do Usuário
 
-Layout Principal
-
-Sidebar: Formulário para criação de eventos
-
-Conteúdo Principal: Lista de eventos cadastrados
-
-Header: Barra de navegação com busca
-
-Footer: Informações do sistema
-
-Componentes
-
-Formulário de Evento
-
-Campos obrigatórios marcados com *
-
-Validação em tempo real
-
-Datas sincronizadas automaticamente
-
-Cards de Evento
-
-Informações principais visíveis
-
-Badge indicando tipo (com/sem diária)
-
-Botões de ação (editar/excluir)
-
-Estatísticas
-
-Total de eventos
-
-Eventos com diária
-
-Eventos do mês atual
-
-🔧 Configuração para Produção
-Backend (application.properties)
-properties
-# Banco de dados PostgreSQL
-spring.datasource.url=jdbc:postgresql://localhost:5432/eventospro
-spring.datasource.username=seu_usuario
-spring.datasource.password=sua_senha
-
-# JPA
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=false
-
-# CORS (ajuste para seu domínio)
-cors.allowed-origins=https://seu-dominio.com
-
-# Porta
-server.port=8080
-Frontend (Deploy)
-Hospede os arquivos estáticos em:
-
-Netlify (recomendado)
-
-Vercel
-
-GitHub Pages
-
-AWS S3 + CloudFront
 
 Atualize a URL da API:
 
 javascript
-const API_BASE_URL = 'https://sua-api-producao.com/eventos';
+const API_BASE_URL = 'https://sua-api-producao.com/evento';
 🧪 Testando a Aplicação
 Testes Backend
 bash
@@ -222,8 +158,6 @@ Bootstrap 5 - Componentes UI
 
 Bootstrap Icons - Ícones vetoriais
 
-🤝 Contribuindo
-Fork o projeto
 
 Crie uma branch para sua feature (git checkout -b feature/AmazingFeature)
 
@@ -233,29 +167,16 @@ Push para a branch (git push origin feature/AmazingFeature)
 
 Abra um Pull Request
 
-📄 Licença
-Este projeto está licenciado sob a Licença MIT - veja o arquivo LICENSE para detalhes.
+Melhorias:
 
-👤 Autor
-Giacc Neto
+🚧 Em breve / Roadmap
+[ ] Autenticação JWT: Implementação de login seguro.
 
-GitHub: @giaccneto
+[ ] Gestão de Usuários: Fluxo de cadastro e persistência em banco de dados.
 
-🙏 Agradecimentos
-Spring Boot
+[ ] Controle de Acesso (RBAC): Autorização granular baseada na Role do usuário (Admin vs. User).
 
-Bootstrap
 
-Bootstrap Icons
-
-📞 Suporte
-Encontrou um problema ou tem uma sugestão?
-
-Verifique as Issues
-
-Abra uma nova issue se necessário
-
-Ou entre em contato: seu-email@exemplo.com
 
 ⭐ Se este projeto foi útil para você, considere dar uma estrela no repositório!
 
