@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventosPro - Gestão de Eventos Profissional</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+   <link rel="stylesheet" href="style.css">
+    <!-- Custom JS -->
+    <script defer src="script.js"></script>
+
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-calendar-event me-2"></i>
+                EventosPro
+            </a>
+            <span class="navbar-text d-none d-md-block">Gestão de Eventos Profissional</span>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar (Formulário de Evento) -->
+            <div class="col-lg-4 col-md-5 mb-4">
+                <div class="sidebar">
+                    <h4 class="mb-4"><i class="bi bi-plus-circle me-2"></i>Novo Evento</h4>
+                    <p class="text-muted small">Preencha os dados para criar um novo evento</p>
+                    
+                    <form id="eventoForm">
+                        <div class="mb-3">
+                            <label for="nomeEvento" class="form-label">Nome do Evento *</label>
+                            <input type="text" class="form-control" id="nomeEvento" 
+                                   placeholder="Ex: Curso de Python" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="publicoAlvo" class="form-label">Público Alvo *</label>
+                            <input type="text" class="form-control" id="publicoAlvo" 
+                                   placeholder="Ex: Professores" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="ch" class="form-label">Carga Horária (horas) *</label>
+                            <input type="number" class="form-control" id="ch" 
+                                   placeholder="Ex: 40" min="1" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="local" class="form-label">Local *</label>
+                            <input type="text" class="form-control" id="local" 
+                                   placeholder="Ex: Online ou Endereço" required>
+                        </div>
+                        
+                        <div class="date-range">
+                            <div class="row mb-2">
+                                <div class="col-md-6">
+                                    <label for="dataInicio" class="form-label">Data Início *</label>
+                                    <input type="date" class="form-control" id="dataInicio" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="dataFim" class="form-label">Data Fim *</label>
+                                    <input type="date" class="form-control" id="dataFim" required>
+                                </div>
+                            </div>
+                            <small class="text-muted">Período do evento</small>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="diaria" checked>
+                                <label class="form-check-label" for="diaria">
+                                    <i class="bi bi-sun me-1"></i> Diária (Evento com alojamento)
+                                </label>
+                            </div>
+                            <small class="text-muted">Marque se o evento inclui hospedagem/diária</small>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary" id="btnCriarEvento">
+                                <i class="bi bi-calendar-plus me-2"></i>Criar Evento
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary" id="btnLimparForm">
+                                <i class="bi bi-x-circle me-2"></i>Limpar Formulário
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <hr class="my-4">
+                    
+                    <!-- Estatísticas -->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="stat-card">
+                                <div class="stat-number" id="totalEventos">0</div>
+                                <div class="stat-label">Eventos Ativos</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="stat-card">
+                                <div class="stat-number" id="eventosDiaria">0</div>
+                                <div class="stat-label">Com Diária</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info small">
+                        <i class="bi bi-info-circle me-2"></i>
+                        Este mês: <span id="eventosEsteMes">0</span> eventos ativos
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Conteúdo Principal (Lista de Eventos) -->
+            <div class="col-lg-8 col-md-7">
+                <div class="main-content">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h4><i class="bi bi-calendar-week me-2"></i>Eventos Cadastrados</h4>
+                        
+                        <div class="search-box">
+                            <i class="bi bi-search"></i>
+                            <input type="text" class="form-control" id="buscarEvento" 
+                                   placeholder="Buscar evento por nome...">
+                        </div>
+                    </div>
+                    
+                    <!-- Lista de Eventos -->
+                    <div id="listaEventos">
+                        <!-- Eventos serão carregados aqui dinamicamente -->
+                        <div class="empty-state">
+                            <i class="bi bi-calendar-x"></i>
+                            <h5>Nenhum evento encontrado</h5>
+                            <p>Crie seu primeiro evento usando o formulário ao lado ou busque por um evento existente.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Modal para Edição de Evento -->
+                    <div class="modal fade" id="editarEventoModal" tabindex="-1">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Editar Evento</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="editarEventoForm">
+                                        <input type="hidden" id="editNomeOriginal">
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="editNomeEvento" class="form-label">Nome do Evento *</label>
+                                                <input type="text" class="form-control" id="editNomeEvento" required>
+                                            </div>
+                                            
+                                            <div class="col-md-6 mb-3">
+                                                <label for="editPublicoAlvo" class="form-label">Público Alvo *</label>
+                                                <input type="text" class="form-control" id="editPublicoAlvo" required>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-4 mb-3">
+                                                <label for="editCh" class="form-label">Carga Horária *</label>
+                                                <input type="number" class="form-control" id="editCh" min="1" required>
+                                            </div>
+                                            
+                                            <div class="col-md-8 mb-3">
+                                                <label for="editLocal" class="form-label">Local *</label>
+                                                <input type="text" class="form-control" id="editLocal" required>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="date-range mb-3">
+                                            <div class="row">
+                                                <div class="col-md-6 mb-2">
+                                                    <label for="editDataInicio" class="form-label">Data Início *</label>
+                                                    <input type="date" class="form-control" id="editDataInicio" required>
+                                                </div>
+                                                <div class="col-md-6 mb-2">
+                                                    <label for="editDataFim" class="form-label">Data Fim *</label>
+                                                    <input type="date" class="form-control" id="editDataFim" required>
+                                                </div>
+                                            </div>
+                                            <small class="text-muted">Período do evento</small>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="editDiaria">
+                                                <label class="form-check-label" for="editDiaria">
+                                                    <i class="bi bi-sun me-1"></i> Diária (Evento com alojamento)
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="button" class="btn btn-primary" id="btnSalvarEdicao">Salvar Alterações</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <footer>
+                    <div class="text-center">
+                        <p>EventosPro &copy; 2025 - Gestão de Eventos Profissional</p>
+                        <p class="small">Todos os direitos reservados</p>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
